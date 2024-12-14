@@ -1,3 +1,5 @@
+let products;
+
 const api = async ({endpoint,method ="GET"}) =>{
     try{
         const base = "https://fakestoreapi.com" ;
@@ -7,7 +9,7 @@ const api = async ({endpoint,method ="GET"}) =>{
         });
 
         if(res.status >= 2 && res.status < 400){
-            const resData = await res.json();
+             const resData = await res.json();
             
             return resData;
         }else{
@@ -22,8 +24,9 @@ const api = async ({endpoint,method ="GET"}) =>{
 
 const getProducts = async ()=>{
     try{
-        const products = await api({endpoint:"/products"});
-         showProducts(products);            
+        products = await api({endpoint:"/products"});
+         showProducts(products); 
+         handleFilter();           
     }catch(e){
         console.log("ERROR!", e);
     }
@@ -41,7 +44,7 @@ const showProducts = (products) => {
 }
 
 const createCard = (item) => {
-    const {tittle,category,image,rating,price} = item;
+    const {tittle,category,image,rating,id,price} = item;
     const {rate} = rating;
 
     let card = $(`<div class="product_card">
@@ -58,8 +61,34 @@ const createCard = (item) => {
                 </div>
             </div>`)
 
-            return card;
+           card.on('click',()=>{
+            alert(id)
+           })
+
+           return card;
 }
 
+const clearProducts = ()=>{
+    $('products_container').empty();
+}
+
+const handleFilter = ()=>{
+    const filterList = $("#product_filter");
+
+    filterList.on("change",(event)=>{
+        const {value} = event.target;
+        let filteredProducts;
+        
+        if(value === "all"){
+            filteredProducts = products;
+        }else{
+            filteredProducts = resData.filter((item)=>
+                Math.ceil(item.rating.rate) === parseInt(value)
+            )
+        }
+        clearProducts();
+        showProducts(filteredProducts);
+    })
+}
 
 getProducts();

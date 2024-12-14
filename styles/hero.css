@@ -118,3 +118,13 @@ body{
 .product_rating{
     font-size: 12px;
 }
+
+.product_filter{
+    text-align: right;
+    margin-top: 10px;
+}
+
+.product_filter_label{
+    color: grey;
+    ma
+}
