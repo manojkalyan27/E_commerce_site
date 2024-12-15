@@ -1,9 +1,10 @@
 let products;
 
 const api = async ({endpoint,method ="GET"}) =>{
-    try{
-        const base = "https://fakestoreapi.com" ;
-        const url = base + endpoint;    
+    const base = "https://fakestoreapi.com" ;
+    const url = base + endpoint; 
+    
+    try{   
         const res = await fetch(url,{
             method,
         });
@@ -44,7 +45,7 @@ const showProducts = (products) => {
 }
 
 const createCard = (item) => {
-    const {tittle,category,image,rating,id,price} = item;
+    const {title,category,image,rating,id,price} = item;
     const {rate} = rating;
 
     let card = $(`<div class="product_card">
@@ -53,7 +54,7 @@ const createCard = (item) => {
                 </div>
 
                 <div class="product_content">
-                    <p class="product_tittle">${tittle}</</p>
+                    <p class="product_tittle">${title}</</p>
                     <p class="product_brand">${category} </p>
                     <p class="product_price">Price: ${price}/-</p>
                     <p class="product_rating">${"🌟".repeat(Math.ceil(rate))}</p>
@@ -62,14 +63,16 @@ const createCard = (item) => {
             </div>`)
 
            card.on('click',()=>{
-            alert(id)
+            const path = location.href;
+            location.href = path.replace("dynamic","product") + `?id=${id}`;
            })
 
            return card;
 }
 
 const clearProducts = ()=>{
-    $('products_container').empty();
+    $('#products_container').empty();
+    console.log("hello")
 }
 
 const handleFilter = ()=>{
@@ -82,7 +85,7 @@ const handleFilter = ()=>{
         if(value === "all"){
             filteredProducts = products;
         }else{
-            filteredProducts = resData.filter((item)=>
+            filteredProducts = products.filter((item)=>
                 Math.ceil(item.rating.rate) === parseInt(value)
             )
         }

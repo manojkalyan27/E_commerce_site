@@ -1,13 +1,4 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
 
-body{
-    background-color: rgb(245, 242, 242);
-}
 
 .hero_section{
     height: 250px;
@@ -126,5 +117,4 @@ body{
 
 .product_filter_label{
     color: grey;
-    ma
 }
